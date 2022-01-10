@@ -1,0 +1,43 @@
+server:
+  port: 8099
+  compression.enabled: true
+  error.include-message: always
+  spring.url: localhost:8099
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=voting_schema
+    username: postgres
+    password: 123
+    driverClassName: org.postgresql.Driver
+    driver: org.postgresql.Driver
+    connection-from: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate.format_sql: true
+  web:
+    locale: pt_BR
+    localeResolver: fixed
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+springdoc:
+  override-with-generic-response: false
+  api-docs:
+    enabled: true
+  swagger-ui:
+    server.list: http://localhost:8099/api/voting-challenge
+    enabled: true
+    doc-expansion: none
+    operations-sorter: alpha
+    tags-sorter: alpha
+    filter: true
+    path: /swagger-ui
+    disable-swagger-default-url: true
+    csrf.enabled: false
+  default-produces-media-type: application/json
