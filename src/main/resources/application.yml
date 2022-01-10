@@ -1,5 +1,6 @@
 server:
   port: 8099
+  servlet.context-path: /api/voting-challenge
   compression.enabled: true
   error.include-message: always
   spring.url: localhost:8099
@@ -41,3 +42,6 @@ springdoc:
     disable-swagger-default-url: true
     csrf.enabled: false
   default-produces-media-type: application/json
+api:
+  standard-error:
+    trace: false

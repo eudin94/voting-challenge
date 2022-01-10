@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/associates")
@@ -26,9 +26,25 @@ public class AssociateResource {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    @Operation(summary = "Create associate / Criar associado",
+    @Operation(summary = "Criar associado",
             responses = {@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = AssociateDTO.class)))})
     public AssociateDTO create(@Valid @RequestBody AssociateRequestDTO request) {
         return service.create(request);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(OK)
+    @Operation(summary = "Encontrar associado pelo id",
+            responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AssociateDTO.class)))})
+    public AssociateDTO findDTOById(@Valid @PathVariable Long id) {
+        return service.findDTOById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(NO_CONTENT)
+    @Operation(summary = "Deletar associado pelo id",
+            responses = {@ApiResponse(responseCode = "204", content = @Content(schema = @Schema(implementation = AssociateDTO.class)))})
+    public void delete(@Valid @PathVariable Long id) {
+        service.delete(id);
     }
 }
