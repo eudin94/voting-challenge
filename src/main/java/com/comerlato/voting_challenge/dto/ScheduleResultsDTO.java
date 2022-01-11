@@ -10,10 +10,10 @@ import lombok.extern.jackson.Jacksonized;
 @With
 @Jacksonized
 @Builder
-public class VotingResultDTO {
+public class ScheduleResultsDTO {
 
-    VoteResultEnum result;
     Long scheduleId;
     Long votedYes;
     Long votedNo;
+    VoteResultEnum result;
 }

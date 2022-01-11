@@ -15,7 +15,8 @@ public enum ErrorCodeEnum {
     ERROR_CLOSED_SCHEDULE("error.closed.schedule"),
     ERROR_OPEN_SCHEDULE("error.open.schedule"),
     ERROR_VOTE_ALREADY_EXISTS("error.vote.already.exists"),
-    ERROR_VOTE_NOT_FOUND("error.vote.not.found");
+    ERROR_VOTE_NOT_FOUND("error.vote.not.found"),
+    ERROR_SCHEDULE_RESULTS_NOT_FOUND("error.schedule.results.not.found");
 
     private final String messageKey;
 }

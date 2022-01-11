@@ -2,21 +2,23 @@ package com.comerlato.voting_challenge.service;
 
 import com.comerlato.voting_challenge.dto.*;
 import com.comerlato.voting_challenge.entity.Schedule;
+import com.comerlato.voting_challenge.entity.ScheduleResults;
 import com.comerlato.voting_challenge.entity.Vote;
 import com.comerlato.voting_challenge.enums.VoteResultEnum;
 import com.comerlato.voting_challenge.helper.MessageHelper;
 import com.comerlato.voting_challenge.repository.ScheduleRepository;
+import com.comerlato.voting_challenge.repository.ScheduleResultsRepository;
 import com.comerlato.voting_challenge.repository.VoteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import static com.comerlato.voting_challenge.enums.VoteAnswerEnum.NO;
 import static com.comerlato.voting_challenge.enums.VoteAnswerEnum.YES;
 import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.*;
-import static com.comerlato.voting_challenge.util.mapper.MapperConstants.scheduleMapper;
-import static com.comerlato.voting_challenge.util.mapper.MapperConstants.voteMapper;
-import static java.lang.Boolean.FALSE;
+import static com.comerlato.voting_challenge.util.mapper.MapperConstants.*;
+import static java.lang.Boolean.TRUE;
 import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -28,6 +30,8 @@ public class ScheduleService {
     private final AssociateService associateService;
     private final ScheduleRepository repository;
     private final VoteRepository voteRepository;
+    private final ScheduleResultsRepository scheduleResultsRepository;
+    private final TransactionTemplate transaction;
     private final MessageHelper messageHelper;
 
     public ScheduleDTO create(final ScheduleRequestDTO request) {
@@ -40,10 +44,14 @@ public class ScheduleService {
         return scheduleMapper.buildScheduleDTO(findById(scheduleId));
     }
 
-    public ScheduleDTO closeSchedule(final Long scheduleId) {
-        final var schedule = findById(scheduleId);
-        final var closedSchedule = repository.save(schedule.withClosed(true));
-        return findDTOById(closedSchedule.getId());
+    public ScheduleResultsDTO closeSchedule(final Long scheduleId) {
+        return transaction.execute(status -> {
+            final var schedule = findById(scheduleId);
+            if (TRUE.equals(schedule.getClosed()))
+                throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_CLOSED_SCHEDULE));
+            final var closedSchedule = repository.save(schedule.withClosed(true));
+            return createScheduleResults(closedSchedule.getId());
+        });
     }
 
     public VoteDTO voteForSchedule(final VoteRequestDTO request) {
@@ -52,11 +60,8 @@ public class ScheduleService {
         return findVoteDTOById(savedVote.getId());
     }
 
-    public VotingResultDTO showScheduleResults(final Long scheduleId) {
-        final var schedule = findById(scheduleId);
-        if (FALSE.equals(schedule.getClosed()))
-            throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_OPEN_SCHEDULE));
-        return buildVotingResults(scheduleId);
+    public ScheduleResultsDTO findScheduleResultsDTOById(final Long scheduleId) {
+        return scheduleResultsMapper.buildScheduleResultsDTO(findScheduleResultsById(scheduleId));
     }
 
     public VoteDTO findVoteDTOById(final Long voteId) {
@@ -65,7 +70,7 @@ public class ScheduleService {
 
     private void validateVote(final Long scheduleId, final Long associateId) {
         final var schedule = findDTOById(scheduleId);
-        if (schedule.getClosed())
+        if (TRUE.equals(schedule.getClosed()))
             throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_CLOSED_SCHEDULE));
         final var associate = associateService.findDTOById(associateId);
         final var existingVote = voteRepository
@@ -84,7 +89,17 @@ public class ScheduleService {
                 messageHelper.get(ERROR_VOTE_NOT_FOUND)));
     }
 
-    private VotingResultDTO buildVotingResults(final Long scheduleId) {
+    private ScheduleResults findScheduleResultsById(final Long scheduleId) {
+        return scheduleResultsRepository.findById(scheduleId).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
+                messageHelper.get(ERROR_SCHEDULE_RESULTS_NOT_FOUND)));
+    }
+
+    private ScheduleResultsDTO createScheduleResults(final Long scheduleId) {
+        final var results = scheduleResultsRepository.save(buildScheduleResults(scheduleId));
+        return scheduleResultsMapper.buildScheduleResultsDTO(findScheduleResultsById(results.getScheduleId()));
+    }
+
+    private ScheduleResults buildScheduleResults(final Long scheduleId) {
         final var votedYes = voteRepository.countByAnswerAndScheduleId(YES, scheduleId);
         final var votedNo = voteRepository.countByAnswerAndScheduleId(NO, scheduleId);
         VoteResultEnum result;
@@ -93,11 +108,11 @@ public class ScheduleService {
         } else {
             result = votedYes.equals(votedNo) ? VoteResultEnum.DRAW : VoteResultEnum.NO;
         }
-        return VotingResultDTO.builder()
-                .result(result)
+        return ScheduleResults.builder()
                 .scheduleId(scheduleId)
                 .votedYes(votedYes)
                 .votedNo(votedNo)
+                .result(result)
                 .build();
     }
 }

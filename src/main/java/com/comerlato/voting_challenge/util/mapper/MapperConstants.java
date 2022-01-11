@@ -10,4 +10,5 @@ public class MapperConstants {
     public static final AssociateMapper associateMapper = Mappers.getMapper(AssociateMapper.class);
     public static final ScheduleMapper scheduleMapper = Mappers.getMapper(ScheduleMapper.class);
     public static final VoteMapper voteMapper = Mappers.getMapper(VoteMapper.class);
+    public static final ScheduleResultsMapper scheduleResultsMapper = Mappers.getMapper(ScheduleResultsMapper.class);
 }
