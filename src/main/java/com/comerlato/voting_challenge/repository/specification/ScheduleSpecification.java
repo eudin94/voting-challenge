@@ -21,8 +21,8 @@ public class ScheduleSpecification implements Specification<Schedule> {
     @Override
     public Predicate toPredicate(Root<Schedule> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder builder) {
         final var predicates = new ArrayList<Predicate>();
-        subject.ifPresent(s -> predicates.add(builder.like(builder.lower(root.get("cpf")), "%" + s.toLowerCase() + "%")));
-        closed.ifPresent(s -> predicates.add(root.get("name").in(s)));
+        subject.ifPresent(s -> predicates.add(builder.like(builder.lower(root.get("subject")), "%" + s.toLowerCase() + "%")));
+        closed.ifPresent(s -> predicates.add(root.get("closed").in(s)));
         criteriaQuery.distinct(true);
         return builder.and(predicates.toArray(new Predicate[0]));
     }

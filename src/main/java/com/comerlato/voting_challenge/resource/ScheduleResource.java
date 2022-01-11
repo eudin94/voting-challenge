@@ -39,13 +39,13 @@ public class ScheduleResource {
     @ResponseStatus(OK)
     @Operation(summary = "Listar pautas",
             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ScheduleDTO[].class)))})
-    public Page<ScheduleDTO> findAll(@RequestParam(required = false) Optional<String> description,
+    public Page<ScheduleDTO> findAll(@RequestParam(required = false) Optional<String> subject,
                                      @RequestParam(required = false) Optional<Boolean> closed,
                                      @RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "10") Integer size,
                                      @RequestParam(defaultValue = "id") String sort,
                                      @RequestParam(defaultValue = "ASC") Sort.Direction direction) {
-        return service.findAll(description, closed, PageRequest.of(page, size, Sort.by(direction, sort)));
+        return service.findAll(subject, closed, PageRequest.of(page, size, Sort.by(direction, sort)));
     }
 
     @PostMapping("/vote")
