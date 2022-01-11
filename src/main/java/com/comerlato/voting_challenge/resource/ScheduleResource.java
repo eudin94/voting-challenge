@@ -1,7 +1,6 @@
 package com.comerlato.voting_challenge.resource;
 
-import com.comerlato.voting_challenge.dto.ScheduleDTO;
-import com.comerlato.voting_challenge.dto.ScheduleRequestDTO;
+import com.comerlato.voting_challenge.dto.*;
 import com.comerlato.voting_challenge.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,11 +31,35 @@ public class ScheduleResource {
         return service.create(request);
     }
 
+    @PostMapping("/vote")
+    @ResponseStatus(CREATED)
+    @Operation(summary = "Votar em pauta",
+            responses = {@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = VoteDTO.class)))})
+    public VoteDTO voteForSchedule(@Valid @RequestBody VoteRequestDTO request) {
+        return service.voteForSchedule(request);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(OK)
     @Operation(summary = "Encontrar pauta pelo id",
             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ScheduleDTO.class)))})
     public ScheduleDTO findDTOById(@Valid @PathVariable Long id) {
         return service.findDTOById(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(OK)
+    @Operation(summary = "Encerrar pauta pelo id",
+            responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ScheduleDTO.class)))})
+    public ScheduleDTO closeSchedule(@Valid @PathVariable Long id) {
+        return service.closeSchedule(id);
+    }
+
+    @GetMapping("/{id}/results")
+    @ResponseStatus(OK)
+    @Operation(summary = "Encontrar resultado de pauta encerrada pelo id",
+            responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = VotingResultDTO.class)))})
+    public VotingResultDTO showScheduleResults(@Valid @PathVariable Long id) {
+        return service.showScheduleResults(id);
     }
 }

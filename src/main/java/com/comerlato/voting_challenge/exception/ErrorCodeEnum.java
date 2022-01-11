@@ -13,6 +13,7 @@ public enum ErrorCodeEnum {
     ERROR_ASSOCIATE_NOT_FOUND("error.associate.not.found"),
     ERROR_SCHEDULE_NOT_FOUND("error.schedule.not.found"),
     ERROR_CLOSED_SCHEDULE("error.closed.schedule"),
+    ERROR_OPEN_SCHEDULE("error.open.schedule"),
     ERROR_VOTE_ALREADY_EXISTS("error.vote.already.exists"),
     ERROR_VOTE_NOT_FOUND("error.vote.not.found");
 
