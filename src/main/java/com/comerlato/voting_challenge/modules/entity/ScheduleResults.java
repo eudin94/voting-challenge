@@ -1,4 +1,4 @@
-package com.comerlato.voting_challenge.entity;
+package com.comerlato.voting_challenge.modules.entity;
 
 import com.comerlato.voting_challenge.enums.VoteResultEnum;
 import lombok.*;

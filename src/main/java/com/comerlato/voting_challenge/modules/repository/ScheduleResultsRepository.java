@@ -1,6 +1,6 @@
-package com.comerlato.voting_challenge.repository;
+package com.comerlato.voting_challenge.modules.repository;
 
-import com.comerlato.voting_challenge.entity.ScheduleResults;
+import com.comerlato.voting_challenge.modules.entity.ScheduleResults;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

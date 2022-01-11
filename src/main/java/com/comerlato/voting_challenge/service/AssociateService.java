@@ -2,10 +2,10 @@ package com.comerlato.voting_challenge.service;
 
 import com.comerlato.voting_challenge.dto.AssociateDTO;
 import com.comerlato.voting_challenge.dto.AssociateRequestDTO;
-import com.comerlato.voting_challenge.entity.Associate;
+import com.comerlato.voting_challenge.modules.entity.Associate;
 import com.comerlato.voting_challenge.helper.MessageHelper;
-import com.comerlato.voting_challenge.repository.AssociateRepository;
-import com.comerlato.voting_challenge.repository.specification.AssociateSpecification;
+import com.comerlato.voting_challenge.modules.repository.AssociateRepository;
+import com.comerlato.voting_challenge.modules.repository.specification.AssociateSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

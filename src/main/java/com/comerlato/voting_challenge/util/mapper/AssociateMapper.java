@@ -2,7 +2,7 @@ package com.comerlato.voting_challenge.util.mapper;
 
 import com.comerlato.voting_challenge.dto.AssociateDTO;
 import com.comerlato.voting_challenge.dto.AssociateRequestDTO;
-import com.comerlato.voting_challenge.entity.Associate;
+import com.comerlato.voting_challenge.modules.entity.Associate;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

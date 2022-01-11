@@ -1,15 +1,15 @@
 package com.comerlato.voting_challenge.service;
 
 import com.comerlato.voting_challenge.dto.*;
-import com.comerlato.voting_challenge.entity.Schedule;
-import com.comerlato.voting_challenge.entity.ScheduleResults;
-import com.comerlato.voting_challenge.entity.Vote;
+import com.comerlato.voting_challenge.modules.entity.Schedule;
+import com.comerlato.voting_challenge.modules.entity.ScheduleResults;
+import com.comerlato.voting_challenge.modules.entity.Vote;
 import com.comerlato.voting_challenge.enums.VoteResultEnum;
 import com.comerlato.voting_challenge.helper.MessageHelper;
-import com.comerlato.voting_challenge.repository.ScheduleRepository;
-import com.comerlato.voting_challenge.repository.ScheduleResultsRepository;
-import com.comerlato.voting_challenge.repository.VoteRepository;
-import com.comerlato.voting_challenge.repository.specification.ScheduleSpecification;
+import com.comerlato.voting_challenge.modules.repository.ScheduleRepository;
+import com.comerlato.voting_challenge.modules.repository.ScheduleResultsRepository;
+import com.comerlato.voting_challenge.modules.repository.VoteRepository;
+import com.comerlato.voting_challenge.modules.repository.specification.ScheduleSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

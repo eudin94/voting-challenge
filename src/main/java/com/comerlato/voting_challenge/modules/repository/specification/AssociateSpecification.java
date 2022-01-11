@@ -1,6 +1,6 @@
-package com.comerlato.voting_challenge.repository.specification;
+package com.comerlato.voting_challenge.modules.repository.specification;
 
-import com.comerlato.voting_challenge.entity.Associate;
+import com.comerlato.voting_challenge.modules.entity.Associate;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.Specification;
 
