@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_ASSOCIATE_NOT_FOUND;
 import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_CPF_ALREADY_EXISTS;
 import static com.comerlato.voting_challenge.util.mapper.MapperConstants.associateMapper;
@@ -30,12 +28,13 @@ public class AssociateService {
         return findDTOById(savedAssociate.getId());
     }
 
-    public void delete(final Long id) {
-        repository.deleteById(id);
-    }
-
     public AssociateDTO findDTOById(final Long id) {
         return associateMapper.buildAssociateDTO(findById(id));
+    }
+
+    public void delete(final Long id) {
+        final var associate = findById(id);
+        repository.delete(associate);
     }
 
     private void validateCPF(final String cpf) {

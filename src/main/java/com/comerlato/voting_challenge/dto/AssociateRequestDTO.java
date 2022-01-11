@@ -5,6 +5,8 @@ import lombok.Value;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+import javax.validation.constraints.NotBlank;
+
 @Value
 @With
 @Jacksonized
@@ -13,5 +15,6 @@ public class AssociateRequestDTO {
 
     //TODO Criar anotação com integração para verificar se o CPF é válido
     String cpf;
+    @NotBlank
     String name;
 }

@@ -1,8 +1,11 @@
 package com.comerlato.voting_challenge.entity;
 
+import com.comerlato.voting_challenge.enums.VoteAnswerEnum;
 import lombok.*;
 
 import javax.persistence.*;
+
+import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Data
@@ -18,4 +21,6 @@ public class Vote {
     private Long id;
     private Long scheduleId;
     private Long associateId;
+    @Enumerated(STRING)
+    private VoteAnswerEnum answer;
 }
