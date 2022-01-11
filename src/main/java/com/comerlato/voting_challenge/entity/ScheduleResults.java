@@ -16,7 +16,7 @@ import static javax.persistence.EnumType.STRING;
 @With
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "voting_results")
+@Table(name = "schedule_results")
 public class ScheduleResults {
 
     @Id

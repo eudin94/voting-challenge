@@ -1,7 +1,6 @@
 package com.comerlato.voting_challenge.resource;
 
 import com.comerlato.voting_challenge.dto.*;
-import com.comerlato.voting_challenge.entity.ScheduleResults;
 import com.comerlato.voting_challenge.service.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,9 +8,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -30,6 +33,19 @@ public class ScheduleResource {
             responses = {@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = ScheduleDTO.class)))})
     public ScheduleDTO create(@Valid @RequestBody ScheduleRequestDTO request) {
         return service.create(request);
+    }
+
+    @GetMapping
+    @ResponseStatus(OK)
+    @Operation(summary = "Listar pautas",
+            responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ScheduleDTO[].class)))})
+    public Page<ScheduleDTO> findAll(@RequestParam(required = false) Optional<String> description,
+                                     @RequestParam(required = false) Optional<Boolean> closed,
+                                     @RequestParam(defaultValue = "0") Integer page,
+                                     @RequestParam(defaultValue = "10") Integer size,
+                                     @RequestParam(defaultValue = "id") String sort,
+                                     @RequestParam(defaultValue = "ASC") Sort.Direction direction) {
+        return service.findAll(description, closed, PageRequest.of(page, size, Sort.by(direction, sort)));
     }
 
     @PostMapping("/vote")

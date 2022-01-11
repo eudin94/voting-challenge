@@ -5,9 +5,14 @@ import com.comerlato.voting_challenge.dto.AssociateRequestDTO;
 import com.comerlato.voting_challenge.entity.Associate;
 import com.comerlato.voting_challenge.helper.MessageHelper;
 import com.comerlato.voting_challenge.repository.AssociateRepository;
+import com.comerlato.voting_challenge.repository.specification.AssociateSpecification;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_ASSOCIATE_NOT_FOUND;
 import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_CPF_ALREADY_EXISTS;
@@ -26,6 +31,13 @@ public class AssociateService {
         validateCPF(request.getCpf());
         final var savedAssociate = repository.save(associateMapper.buildAssociate(request));
         return findDTOById(savedAssociate.getId());
+    }
+
+    public Page<AssociateDTO> findAll(final Optional<String> cpf, final Optional<String> name, final Pageable pageable) {
+        return repository.findAll(AssociateSpecification.builder()
+                .cpf(cpf)
+                .name(name)
+                .build(), pageable).map(associateMapper::buildAssociateDTO);
     }
 
     public AssociateDTO findDTOById(final Long id) {

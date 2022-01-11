@@ -9,10 +9,15 @@ import com.comerlato.voting_challenge.helper.MessageHelper;
 import com.comerlato.voting_challenge.repository.ScheduleRepository;
 import com.comerlato.voting_challenge.repository.ScheduleResultsRepository;
 import com.comerlato.voting_challenge.repository.VoteRepository;
+import com.comerlato.voting_challenge.repository.specification.ScheduleSpecification;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 import static com.comerlato.voting_challenge.enums.VoteAnswerEnum.NO;
 import static com.comerlato.voting_challenge.enums.VoteAnswerEnum.YES;
@@ -38,6 +43,13 @@ public class ScheduleService {
         final var savedSchedule = repository.save(scheduleMapper.buildSchedule(request).withClosed(false)
                 .withDurationInSeconds(nonNull(request.getDurationInSeconds()) ? request.getDurationInSeconds() : 60));
         return findDTOById(savedSchedule.getId());
+    }
+
+    public Page<ScheduleDTO> findAll(final Optional<String> subject, final Optional<Boolean> closed, Pageable pageable) {
+        return repository.findAll(ScheduleSpecification.builder()
+                .subject(subject)
+                .closed(closed)
+                .build(), pageable).map(scheduleMapper::buildScheduleDTO);
     }
 
     public ScheduleDTO findDTOById(final Long scheduleId) {
