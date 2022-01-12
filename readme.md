@@ -17,3 +17,4 @@ pelo menos um para realizar a votação das pautas.</h3>
 <h3>5. Em SCHEDULES podemos criar uma pauta e votar nela antes que o tempo escolhido se encerre. Cada associado só
 poderá votar uma vez por pauta. A pauta poderá ser encerrada antes do tempo pelo endpoint de PUT. O sistema de
 mensageria exibirá o resultado da pauta encerrada automaticamente pelos logs da API.</h3>
+<h3>6. A API se encontra com 100% de coverage de testes unitários nas classes de serviço.</h3>
