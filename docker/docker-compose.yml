@@ -14,11 +14,3 @@ services:
       - "5432:5432"
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d/
-
-  jenkins:
-    image: jenkins/jenkins:jdk11
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - ./initjenkins:/var/jenkins_home
