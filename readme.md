@@ -9,7 +9,7 @@ cd docker
 ```
 docker-compose up
 ```
-<h3>3. Aguarde o contêiner do docker subir e rode a aplicação. Quando a aplicação terminar de subir, clique abaixo
+<h3>3. Aguarde o contêiner do docker subir e rode a aplicação pela classe 'Application'. Quando a aplicação terminar de subir, clique abaixo
 para acessar o swagger :</h3>
 [http://localhost:8099/api/voting-challenge/swagger-ui/](http://localhost:8099/api/voting-challenge/swagger-ui/)
 <h3>4. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de
