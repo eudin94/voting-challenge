@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS vote
     associate_id                BIGINT,
     answer                      VARCHAR (5),
     FOREIGN KEY (schedule_id) REFERENCES schedule (id),
-    FOREIGN KEY (associate_id) REFERENCES associate (id),
     PRIMARY KEY (id)
 );
 

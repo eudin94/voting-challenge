@@ -9,7 +9,11 @@ cd docker
 ```
 docker-compose up
 ```
-<h3>3. Aguarde o contêiner do docker subir e rode a aplicação. Quando a aplicação terminar de subir, clique abaixo para acessar o swagger :</h3>
+<h3>3. Aguarde o contêiner do docker subir e rode a aplicação. Quando a aplicação terminar de subir, clique abaixo
+para acessar o swagger :</h3>
 [Swagger](http://localhost:8099/api/voting-challenge/swagger-ui/)
-<h3>4. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de pelo menos um para realizar a votação das pautas.</h3>
-<h3>5. Em SCHEDULES podemos criar uma pauta e votar nela antes que o tempo escolhido se encerre. Cada associado só poderá votar uma vez.</h3>
+<h3>4. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de
+pelo menos um para realizar a votação das pautas.</h3>
+<h3>5. Em SCHEDULES podemos criar uma pauta e votar nela antes que o tempo escolhido se encerre. Cada associado só
+poderá votar uma vez por pauta. A pauta poderá ser encerrada antes do tempo pelo endpoint de PUT. O sistema de
+mensageria exibirá o resultado da pauta encerrada automaticamente pelos logs da API.</h3>
