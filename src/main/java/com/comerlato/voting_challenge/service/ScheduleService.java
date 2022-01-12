@@ -125,7 +125,7 @@ public class ScheduleService {
 
     private ScheduleResultsDTO createScheduleResults(final Long scheduleId) {
         final var results = scheduleResultsRepository.save(buildScheduleResults(scheduleId));
-        return scheduleResultsMapper.buildScheduleResultsDTO(findScheduleResultsById(results.getScheduleId()));
+        return findScheduleResultsDTOById(results.getScheduleId());
     }
 
     private ScheduleResults buildScheduleResults(final Long scheduleId) {
