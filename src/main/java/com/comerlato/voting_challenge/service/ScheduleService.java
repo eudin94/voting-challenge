@@ -46,7 +46,7 @@ public class ScheduleService {
     public ScheduleDTO create(final ScheduleRequestDTO request) {
         final var savedSchedule = repository.save(scheduleMapper.buildSchedule(request).withClosed(false)
                 .withDurationInSeconds(nonNull(request.getDurationInSeconds()) ? request.getDurationInSeconds() : 60));
-        messageSender.sendMessage(message, durationInSeconds);
+        messageSender.sendMessage(savedSchedule.getId().toString(), savedSchedule.getDurationInSeconds());
         return findDTOById(savedSchedule.getId());
     }
 
