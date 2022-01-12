@@ -6,7 +6,7 @@ import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Positive;
 
 @Value
 @With
@@ -14,7 +14,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Builder
 public class ScheduleRequestDTO {
 
-    @PositiveOrZero
+    @Positive
     Integer durationInSeconds;
     @NotNull
     String subject;
