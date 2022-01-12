@@ -19,3 +19,4 @@ anotação personalizada.</h3>
 poderá votar uma vez por pauta. A pauta poderá ser encerrada antes do tempo pelo endpoint de PUT. O sistema de
 mensageria exibirá o resultado da pauta encerrada automaticamente pelos logs da API.</h3>
 <h3>6. A API se encontra com 100% de coverage de testes unitários nas classes de serviço.</h3>
+<h3>7. A API tem liquibase implementada para facilitar o versionamento.</h3>
