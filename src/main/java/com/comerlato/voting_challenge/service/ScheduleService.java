@@ -10,6 +10,7 @@ import com.comerlato.voting_challenge.modules.repository.ScheduleRepository;
 import com.comerlato.voting_challenge.modules.repository.ScheduleResultsRepository;
 import com.comerlato.voting_challenge.modules.repository.VoteRepository;
 import com.comerlato.voting_challenge.modules.repository.specification.ScheduleSpecification;
+import com.comerlato.voting_challenge.mq.MessageSender;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -39,11 +40,13 @@ public class ScheduleService {
     private final VoteRepository voteRepository;
     private final ScheduleResultsRepository scheduleResultsRepository;
     private final TransactionTemplate transaction;
+    private final MessageSender messageSender;
     private final MessageHelper messageHelper;
 
     public ScheduleDTO create(final ScheduleRequestDTO request) {
         final var savedSchedule = repository.save(scheduleMapper.buildSchedule(request).withClosed(false)
                 .withDurationInSeconds(nonNull(request.getDurationInSeconds()) ? request.getDurationInSeconds() : 60));
+        messageSender.sendMessage(message, durationInSeconds);
         return findDTOById(savedSchedule.getId());
     }
 

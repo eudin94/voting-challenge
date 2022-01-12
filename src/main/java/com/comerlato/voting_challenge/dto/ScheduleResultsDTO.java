@@ -16,4 +16,12 @@ public class ScheduleResultsDTO {
     Long votedYes;
     Long votedNo;
     VoteResultEnum result;
+
+    @Override
+    public String toString() {
+        return "ID da pauta: " + scheduleId +
+                "\nRESULTADO: " + result.getDescription() +
+                "\nVOTOS SIM: " + votedYes +
+                "\nVOTOS NÃO: " + votedNo;
+    }
 }

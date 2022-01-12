@@ -56,3 +56,7 @@ api:
     trace: false
   cpf:
     uri: https://user-info.herokuapp.com/users
+zeromq:
+  port:
+    sender: tcp://localhost:5555
+    receiver: tcp://*:5555
