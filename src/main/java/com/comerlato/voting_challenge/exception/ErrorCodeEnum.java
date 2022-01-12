@@ -8,7 +8,9 @@ import lombok.Getter;
 public enum ErrorCodeEnum {
 
     ERROR_GENERIC_EXCEPTION("error.generic.exception"),
+    ERROR_INTEGRATION_FAILED("error.integration.failed"),
     ERROR_DUPLICATED_FIELD("error.duplicated.field"),
+    ERROR_INVALID_CPF("error.invalid.cpf"),
     ERROR_CPF_ALREADY_EXISTS("error.cpf.already.exists"),
     ERROR_ASSOCIATE_NOT_FOUND("error.associate.not.found"),
     ERROR_SCHEDULE_NOT_FOUND("error.schedule.not.found"),

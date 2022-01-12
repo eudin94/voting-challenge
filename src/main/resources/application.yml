@@ -27,6 +27,8 @@ spring:
     multipart:
       max-file-size: 25MB
       max-request-size: 25MB
+  rabbitmq:
+    addresses: localhost:5672
 springdoc:
   override-with-generic-response: false
   api-docs:
@@ -45,3 +47,5 @@ springdoc:
 api:
   standard-error:
     trace: false
+  cpf:
+    uri: https://user-info.herokuapp.com/users

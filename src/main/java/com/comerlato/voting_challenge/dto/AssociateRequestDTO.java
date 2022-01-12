@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class AssociateRequestDTO {
 
-    //TODO Criar anotação com integração para verificar se o CPF é válido
+    @NotBlank
     String cpf;
     @NotBlank
     String name;
