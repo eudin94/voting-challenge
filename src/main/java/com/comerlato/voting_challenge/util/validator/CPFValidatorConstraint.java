@@ -13,7 +13,7 @@ import static org.hibernate.internal.util.StringHelper.isBlank;
 
 @AllArgsConstructor
 @Slf4j
-public class CPFValidatorConstraint implements ConstraintValidator<CPF, String> {
+public class CPFValidatorConstraint implements ConstraintValidator<ValidCPF, String> {
 
     private final CPFIntegration cpfIntegration;
 
