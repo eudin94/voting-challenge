@@ -4,6 +4,7 @@ version: '3.1'
 services:
 
   db:
+    container_name: voting_challenge
     image: library/postgres:13
     restart: always
     environment:

@@ -6,7 +6,7 @@ server:
   spring.url: localhost:8099
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=voting_schema
+    url: jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=public
     username: postgres
     password: 123
     driverClassName: org.postgresql.Driver
@@ -22,8 +22,8 @@ spring:
       hibernate.format_sql: true
   liquibase:
     enabled: true
-    default-schema: voting_schema
-    liquibase-schema: voting_schema
+    default-schema: public
+    liquibase-schema: public
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}

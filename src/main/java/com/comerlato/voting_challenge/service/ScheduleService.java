@@ -11,6 +11,7 @@ import com.comerlato.voting_challenge.modules.repository.ScheduleResultsReposito
 import com.comerlato.voting_challenge.modules.repository.VoteRepository;
 import com.comerlato.voting_challenge.modules.repository.specification.ScheduleSpecification;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ScheduleService {
 
     private final AssociateService associateService;
@@ -59,8 +61,10 @@ public class ScheduleService {
     public ScheduleResultsDTO closeSchedule(final Long scheduleId) {
         return transaction.execute(status -> {
             final var schedule = findById(scheduleId);
-            if (TRUE.equals(schedule.getClosed()))
+            if (TRUE.equals(schedule.getClosed())) {
+                log.error(messageHelper.get(ERROR_CLOSED_SCHEDULE));
                 throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_CLOSED_SCHEDULE));
+            }
             final var closedSchedule = repository.save(schedule.withClosed(true));
             return createScheduleResults(closedSchedule.getId());
         });
@@ -82,28 +86,38 @@ public class ScheduleService {
 
     private void validateVote(final Long scheduleId, final Long associateId) {
         final var schedule = findDTOById(scheduleId);
-        if (TRUE.equals(schedule.getClosed()))
+        if (TRUE.equals(schedule.getClosed())) {
+            log.error(messageHelper.get(ERROR_CLOSED_SCHEDULE));
             throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_CLOSED_SCHEDULE));
+        }
         final var associate = associateService.findDTOById(associateId);
         final var existingVote = voteRepository
                 .findByScheduleIdAndAssociateId(schedule.getId(), associate.getId());
-        if (existingVote.isPresent())
+        if (existingVote.isPresent()) {
+            log.error(messageHelper.get(ERROR_VOTE_ALREADY_EXISTS));
             throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_VOTE_ALREADY_EXISTS));
+        }
     }
 
     private Schedule findById(final Long scheduleId) {
-        return repository.findById(scheduleId).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
-                messageHelper.get(ERROR_SCHEDULE_NOT_FOUND)));
+        return repository.findById(scheduleId).orElseThrow(() -> {
+            log.error(messageHelper.get(ERROR_SCHEDULE_NOT_FOUND));
+            throw new ResponseStatusException(NOT_FOUND, messageHelper.get(ERROR_SCHEDULE_NOT_FOUND));
+        });
     }
 
     private Vote findVoteById(final Long voteId) {
-        return voteRepository.findById(voteId).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
-                messageHelper.get(ERROR_VOTE_NOT_FOUND)));
+        return voteRepository.findById(voteId).orElseThrow(() -> {
+            log.error(messageHelper.get(ERROR_VOTE_NOT_FOUND));
+            throw new ResponseStatusException(NOT_FOUND, messageHelper.get(ERROR_VOTE_NOT_FOUND));
+        });
     }
 
     private ScheduleResults findScheduleResultsById(final Long scheduleId) {
-        return scheduleResultsRepository.findById(scheduleId).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
-                messageHelper.get(ERROR_SCHEDULE_RESULTS_NOT_FOUND)));
+        return scheduleResultsRepository.findById(scheduleId).orElseThrow(() -> {
+            log.error(messageHelper.get(ERROR_SCHEDULE_RESULTS_NOT_FOUND));
+            throw new ResponseStatusException(NOT_FOUND, messageHelper.get(ERROR_SCHEDULE_RESULTS_NOT_FOUND));
+        });
     }
 
     private ScheduleResultsDTO createScheduleResults(final Long scheduleId) {

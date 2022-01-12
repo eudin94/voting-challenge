@@ -34,4 +34,3 @@ build/
 
 ### Docker ###
 docker/initdb
-docker/initjenkins
