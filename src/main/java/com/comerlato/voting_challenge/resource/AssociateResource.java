@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
@@ -41,8 +40,8 @@ public class AssociateResource {
     @ResponseStatus(OK)
     @Operation(summary = "Listar associados",
             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AssociateDTO[].class)))})
-    public Page<AssociateDTO> findAll(@RequestParam(required = false)Optional<String> cpf,
-                                      @RequestParam(required = false)Optional<String> name,
+    public Page<AssociateDTO> findAll(@RequestParam(required = false) Optional<String> cpf,
+                                      @RequestParam(required = false) Optional<String> name,
                                       @RequestParam(defaultValue = "0") Integer page,
                                       @RequestParam(defaultValue = "10") Integer size,
                                       @RequestParam(defaultValue = "id") String sort,
