@@ -1,5 +1,6 @@
 package com.comerlato.voting_challenge.dto;
 
+import com.comerlato.voting_challenge.util.validator.CPF;
 import lombok.Builder;
 import lombok.Value;
 import lombok.With;
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class AssociateRequestDTO {
 
-    @NotBlank
+    @CPF
     String cpf;
     @NotBlank
     String name;

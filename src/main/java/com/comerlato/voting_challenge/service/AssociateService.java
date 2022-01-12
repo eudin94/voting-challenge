@@ -4,10 +4,8 @@ import com.comerlato.voting_challenge.dto.AssociateDTO;
 import com.comerlato.voting_challenge.dto.AssociateRequestDTO;
 import com.comerlato.voting_challenge.helper.MessageHelper;
 import com.comerlato.voting_challenge.modules.entity.Associate;
-import com.comerlato.voting_challenge.modules.integration.cpf.CPFIntegration;
 import com.comerlato.voting_challenge.modules.repository.AssociateRepository;
 import com.comerlato.voting_challenge.modules.repository.specification.AssociateSpecification;
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.*;
+import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_ASSOCIATE_NOT_FOUND;
+import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_CPF_ALREADY_EXISTS;
 import static com.comerlato.voting_challenge.util.mapper.MapperConstants.associateMapper;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -29,10 +28,9 @@ public class AssociateService {
 
     private final AssociateRepository repository;
     private final MessageHelper messageHelper;
-    private final CPFIntegration cpfIntegration;
 
     public AssociateDTO create(final AssociateRequestDTO request) {
-        validateCPF(request.getCpf());
+        validateExistingCPF(request.getCpf());
         final var savedAssociate = repository.save(associateMapper.buildAssociate(request));
         return findDTOById(savedAssociate.getId());
     }
@@ -53,11 +51,7 @@ public class AssociateService {
         repository.delete(associate);
     }
 
-    private void validateCPF(final String cpf) {
-        Try.run(() -> cpfIntegration.validateCPF(cpf)).onFailure(throwable -> {
-            log.error(throwable.getMessage());
-            throw new ResponseStatusException(BAD_REQUEST, messageHelper.get(ERROR_INVALID_CPF));
-        });
+    private void validateExistingCPF(final String cpf) {
         final var existingAssociate = repository.findByCpf(cpf);
         if (existingAssociate.isPresent()) {
             log.error(messageHelper.get(ERROR_CPF_ALREADY_EXISTS));

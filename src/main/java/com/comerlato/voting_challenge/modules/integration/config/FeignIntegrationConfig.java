@@ -28,7 +28,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
-import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_INTEGRATION_FAILED;
+import static com.comerlato.voting_challenge.exception.ErrorCodeEnum.ERROR_INVALID_CPF;
 import static feign.Request.HttpMethod.GET;
 import static io.vavr.API.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -47,7 +47,7 @@ public class FeignIntegrationConfig {
         return (s, response) -> {
             Optional<HttpStatus> responseStatus = Optional.of(HttpStatus.valueOf(response.status()));
             logHttpError(response, responseStatus);
-            var errorMessage = Lazy.of(messageHelper.get(ERROR_INTEGRATION_FAILED));
+            var errorMessage = Lazy.of(messageHelper.get(ERROR_INVALID_CPF));
             return Match(response).of(
                     Case($(res -> GET.equals(res.request().httpMethod()) && HttpStatus.valueOf(res.status()).is5xxServerError()),
                             new RetryableException(
