@@ -22,6 +22,7 @@ spring:
       hibernate.format_sql: true
   liquibase:
     enabled: true
+    default-schema: voting_schema
     liquibase-schema: voting_schema
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}

@@ -1,0 +1,24 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: library/postgres:13
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "voting_challenge"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d/
+
+  jenkins:
+    image: jenkins/jenkins:jdk11
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./initjenkins:/var/jenkins_home
