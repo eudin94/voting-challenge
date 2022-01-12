@@ -20,6 +20,14 @@ spring:
       dialect: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.format_sql: true
+  liquibase:
+    enabled: true
+    liquibase-schema: voting_schema
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    change-log: db.changelog/db.changelog-master.yaml
+  application.name: voting-challenge
   web:
     locale: pt_BR
     localeResolver: fixed
