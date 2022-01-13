@@ -6,9 +6,9 @@ server:
   spring.url: localhost:8099
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=public
-    username: postgres
-    password: 123
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=public}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:123}
     driverClassName: org.postgresql.Driver
     driver: org.postgresql.Driver
     connection-from: true
