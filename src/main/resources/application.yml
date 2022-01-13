@@ -41,7 +41,7 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    server.list: ${SPRINGDOC_SWAGGER-UI_SERVER_LIST:http://localhost:8099/api/voting-challenge}
+    server.list: ${SPRINGDOC_SWAGGER-UI_SERVER_LIST:https://voting-challenge.herokuapp.com}
     enabled: true
     doc-expansion: none
     operations-sorter: alpha
