@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableAsync
+@EnableScheduling
 @EnableFeignClients(basePackages = {"com.comerlato.voting_challenge.modules.integration"})
 public class AppConfig {
 
