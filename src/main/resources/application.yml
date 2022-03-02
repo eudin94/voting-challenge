@@ -6,7 +6,7 @@ server:
   spring.url: ${SERVER_SPRING_URL:localhost:8099}
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=public}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:4321/voting_challenge?currentSchema=public}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:123}
     driverClassName: org.postgresql.Driver
@@ -56,7 +56,6 @@ api:
     trace: false
   cpf:
     uri: https://user-info.herokuapp.com/users
-zeromq:
-  port:
-    sender: tcp://localhost:5555
-    receiver: tcp://*:5555
+mq:
+  rabbit:
+    queue: schedule_queue

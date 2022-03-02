@@ -12,6 +12,22 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "voting_challenge"
     ports:
-      - "5432:5432"
+      - "4321:4321"
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d/
+
+  rabbitmq:
+    container_name: rabbit_mq
+    image: library/rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+#    volumes:
+#      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge

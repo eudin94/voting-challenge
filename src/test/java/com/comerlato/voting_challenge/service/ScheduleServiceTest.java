@@ -6,7 +6,7 @@ import com.comerlato.voting_challenge.modules.repository.ScheduleRepository;
 import com.comerlato.voting_challenge.modules.repository.ScheduleResultsRepository;
 import com.comerlato.voting_challenge.modules.repository.VoteRepository;
 import com.comerlato.voting_challenge.modules.repository.specification.ScheduleSpecification;
-import com.comerlato.voting_challenge.mq.MessageSender;
+import com.comerlato.voting_challenge.mq.Sender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -57,7 +57,7 @@ public class ScheduleServiceTest {
     @Mock
     private TransactionTemplate transaction;
     @Mock
-    private MessageSender messageSender;
+    private Sender sender;
     @Mock
     private MessageHelper messageHelper;
 

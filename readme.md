@@ -7,7 +7,7 @@ insira:</h3>
 ```
 cd docker
 ```
-<h3>2. Execute o comando(o docker tentará conectar na porta 5432 que precisa estar liberada):</h3>
+<h3>2. Execute o comando(o docker tentará conectar na porta 4321 que precisa estar liberada):</h3>
 ```
 docker-compose up
 ```
