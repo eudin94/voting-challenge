@@ -5,7 +5,6 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,8 +20,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @RequiredArgsConstructor
 public class Sender {
 
-    @Value("${mq.rabbit.queue}")
-    private static String QUEUE_NAME;
+    private static final String QUEUE_NAME = "SCHEDULE_QUEUE";
 
     @Async
     public void sendMessage(final String message, final Integer sleepDurationInSeconds) {
@@ -35,7 +33,7 @@ public class Sender {
             Thread.sleep(TimeUnit.SECONDS.toMillis(sleepDurationInSeconds));
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-            System.out.println(" [x] Sent '" + message + "'");
+            log.info("Mensagem enviada relativa à pauta de ID: [" + message + "]");
 
         } catch (IOException | InterruptedException | TimeoutException e) {
             log.error(e.getMessage(), e);

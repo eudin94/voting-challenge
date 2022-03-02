@@ -56,6 +56,3 @@ api:
     trace: false
   cpf:
     uri: https://user-info.herokuapp.com/users
-mq:
-  rabbit:
-    queue: schedule_queue
