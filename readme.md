@@ -1,19 +1,18 @@
 <h1>Bem-vindo a API de votação em pauta</h1>
 
-<h3>0. Após a entrega realizada no dia 12/01, no dia 13/01 realizei o deploy de uma branch separada no heroku, disponível
-através do link:</h3>
+<h3>0. Realizei o deploy de uma branch separada no heroku, disponível através do link:</h3>
 [https://voting-challenge.herokuapp.com/api/voting-challenge/swagger-ui](https://voting-challenge.herokuapp.com/api/voting-challenge/swagger-ui)
 <h3>1. Para facilitar a configuração do banco, fiz um arquivo docker-compose. Abra o terminal na raíz do projeto e
 insira:</h3>
 ```
 cd docker
 ```
-<h3>2. Execute o comando(o docker tentará conectar na porta 5432 que precisará estar liberada):</h3>
+<h3>2. Execute o comando(o docker tentará conectar na porta 4321 que precisa estar liberada):</h3>
 ```
 docker-compose up
 ```
 <h3>3. Aguarde o contêiner do docker subir e rode a aplicação pela classe 'Application'. Quando a aplicação terminar de subir, clique abaixo
-para acessar o swagger :</h3>
+para acessar o swagger(o perfil 'local' deve estar ativo):</h3>
 [http://localhost:8099/api/voting-challenge/swagger-ui/](http://localhost:8099/api/voting-challenge/swagger-ui/)
 <h3>4. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de
 pelo menos um para realizar a votação das pautas. A integração com a API de validação dos CPFs é feita dentro de uma

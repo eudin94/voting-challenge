@@ -1,14 +1,14 @@
 server:
-  port: 8099
-  servlet.context-path: /api/voting-challenge
+  port: ${SERVER_PORT:8099}
+  servlet.context-path: ${SERVER_CONTEXT-PATH:/api/voting-challenge}
   compression.enabled: true
   error.include-message: always
-  spring.url: localhost:8099
+  spring.url: ${SERVER_SPRING_URL:localhost:8099}
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/voting_challenge?currentSchema=public
-    username: postgres
-    password: 123
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:4321/voting_challenge?currentSchema=public}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:123}
     driverClassName: org.postgresql.Driver
     driver: org.postgresql.Driver
     connection-from: true
@@ -41,7 +41,7 @@ springdoc:
   api-docs:
     enabled: true
   swagger-ui:
-    server.list: http://localhost:8099/api/voting-challenge
+    server.list: ${SPRINGDOC_SWAGGER-UI_SERVER_LIST:https://voting-challenge.herokuapp.com/api/voting-challenge}
     enabled: true
     doc-expansion: none
     operations-sorter: alpha
@@ -56,7 +56,6 @@ api:
     trace: false
   cpf:
     uri: https://user-info.herokuapp.com/users
-zeromq:
-  port:
-    sender: tcp://localhost:5555
-    receiver: tcp://*:5555
+mq:
+  amqp:
+    uri: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}
