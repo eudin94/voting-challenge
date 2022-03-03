@@ -13,13 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.TimeoutException;
 
-import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Slf4j
@@ -34,23 +28,10 @@ public class Receiver {
 
     @PostConstruct
     public void receive() {
-        try {
+        Try.run(() -> {
 
             ConnectionFactory factory = new ConnectionFactory();
-
-            try {
-
-                if (nonNull(URI)) {
-                    factory.setUri(URI);
-                } else {
-                    factory.setUri("amqp://guest:guest@localhost");
-                }
-
-            } catch (URISyntaxException | NoSuchAlgorithmException | KeyManagementException e) {
-                log.error(e.getMessage(), e);
-                throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
-            }
-
+            factory.setUri(URI);
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
@@ -65,10 +46,11 @@ public class Receiver {
             channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
             });
 
-        } catch (IOException | TimeoutException e) {
-            log.error(e.getMessage(), e);
-            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, e.getMessage());
-        }
+        }).onFailure(throwable -> {
+            log.error(throwable.getMessage(), throwable);
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, throwable.getMessage());
+        });
+
     }
 
     private void handleMessage(String message) {
