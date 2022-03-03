@@ -1,6 +1,6 @@
 <h1>Bem-vindo a API de votação em pauta</h1>
 
-<h3>0. Realizei o deploy de uma branch separada no heroku, disponível através do link:</h3>
+<h3>0. Realizei o deploy no heroku, disponível através do link:</h3>
 [https://voting-challenge.herokuapp.com/api/voting-challenge/swagger-ui](https://voting-challenge.herokuapp.com/api/voting-challenge/swagger-ui)
 <h3>1. Para facilitar a configuração do banco, fiz um arquivo docker-compose. Abra o terminal na raíz do projeto e
 insira:</h3>
