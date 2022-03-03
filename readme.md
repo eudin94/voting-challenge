@@ -5,7 +5,7 @@
 <h3>1. Para facilitar a configuração do banco, fiz um arquivo docker-compose. Abra o terminal na raíz do projeto e
 insira:</h3>
 ```
-cd docker
+cd docker-vc
 ```
 <h3>2. Execute o comando(o docker tentará conectar na porta 4321 que precisa estar liberada):</h3>
 ```
