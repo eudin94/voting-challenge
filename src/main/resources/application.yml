@@ -58,4 +58,4 @@ api:
     uri: https://user-info.herokuapp.com/users
 mq:
   amqp:
-    uri: ${CLOUDAMQP_URL:amqps://azfruuik:1enk6Sg0LXnMySWQyIbO7F_S6FoqL6sG@moose.rmq.cloudamqp.com/azfruuik}
+    uri: ${CLOUDAMQP_URL:localhost}
