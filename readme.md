@@ -11,14 +11,19 @@ cd docker-vc
 ```
 docker-compose up
 ```
-<h3>3. Aguarde o contêiner do docker subir e rode a aplicação pela classe 'Application'. Quando a aplicação terminar de subir, clique abaixo
+<h3>3. Aguarde o contêiner do docker subir e rode a aplicação pela classe 'Application', especifique o perfil 'local'
+pelas configurações da IDE ou através do seguinte comando em 'VM Options':</h3>
+```
+-Dspring.profiles.active=local
+```
+<h3>4. Quando a aplicação terminar de subir, clique abaixo
 para acessar o swagger(o perfil 'local' deve estar ativo):</h3>
 [http://localhost:8099/api/voting-challenge/swagger-ui/](http://localhost:8099/api/voting-challenge/swagger-ui/)
-<h3>4. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de
+<h3>5. Em ASSOCIATES podemos criar um associado através do método de POST, se o CPF informado for válido. Precisamos de
 pelo menos um para realizar a votação das pautas. A integração com a API de validação dos CPFs é feita dentro de uma
 anotação personalizada.</h3>
-<h3>5. Em SCHEDULES podemos criar uma pauta e votar nela antes que o tempo escolhido se encerre. Cada associado só
+<h3>6. Em SCHEDULES podemos criar uma pauta e votar nela antes que o tempo escolhido se encerre. Cada associado só
 poderá votar uma vez por pauta. A pauta poderá ser encerrada antes do tempo pelo endpoint de PUT. O sistema de
 mensageria exibirá o resultado da pauta encerrada automaticamente pelos logs da API.</h3>
-<h3>6. A API se encontra com 100% de coverage de testes unitários nas classes de serviço.</h3>
-<h3>7. A API tem liquibase implementada para facilitar o versionamento.</h3>
+<h3>7. A API se encontra com 100% de coverage de testes unitários nas classes de serviço.</h3>
+<h3>8. A API tem liquibase implementada para facilitar o versionamento.</h3>
